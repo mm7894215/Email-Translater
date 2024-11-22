@@ -1,17 +1,17 @@
-# Email Translator
+# 📧 Email Translator
 
-A modern web application for translating HTML emails into multiple languages.
+A modern web application for translating HTML emails into multiple languages. ✨
 
-## Features
+## ✨ Features
 
-- Upload and convert PHP files to HTML
-- Support for multiple translation services (Google Translate, OpenAI)
-- Parallel translation processing
-- Language group management
-- Real-time translation progress tracking
-- Configurable translation providers
+- 📤 Upload and convert PHP files to HTML
+- 🌐 Support for multiple translation services (Google Translate, OpenAI)
+- ⚡ Parallel translation processing
+- 🗂️ Language group management
+- 📊 Real-time translation progress tracking
+- ⚙️ Configurable translation providers
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -20,4 +20,4 @@ A modern web application for translating HTML emails into multiple languages.
 
 ### Installation
 
-1. Clone the repository: # Email-Translater
+1. Clone the repository:
