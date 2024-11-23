@@ -28,29 +28,26 @@ export function LanguageSelector() {
 
     const handleLanguageChange = (value: string) => {
         setSelectedLanguage(value)
-        // 这里可以添加语言切换的逻辑
     }
 
     return (
-        <div className="!mt-0">
-            <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
-                <SelectTrigger 
-                    className="w-[180px] mx-auto" 
-                    aria-label="Select Language"
-                >
-                    <SelectValue placeholder="Select language" />
-                </SelectTrigger>
-                <SelectContent>
-                    {languages.map((language) => (
-                        <SelectItem 
-                            key={language.value} 
-                            value={language.value}
-                        >
-                            {language.label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-        </div>
+        <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
+            <SelectTrigger 
+                className="w-[180px] mx-auto" 
+                aria-label="Select Language"
+            >
+                <SelectValue placeholder="Select language" />
+            </SelectTrigger>
+            <SelectContent align="center">
+                {languages.map((language) => (
+                    <SelectItem 
+                        key={language.value} 
+                        value={language.value}
+                    >
+                        {language.label}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
     )
 }
