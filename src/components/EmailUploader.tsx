@@ -1,75 +1,84 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Upload, File } from 'lucide-react';
+import { Card } from './ui/card';
 
 interface EmailUploaderProps {
-  onFileUpload: (content: string) => void;
+  onUpload: (content: string, fileName: string) => void;
 }
 
-export const EmailUploader: React.FC<EmailUploaderProps> = ({ onFileUpload }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string | null>(null);
+export function EmailUploader({ onUpload }: EmailUploaderProps) {
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        if (!file.name.endsWith('.html') && !file.name.endsWith('.htm')) {
+          console.error('Please upload an HTML file');
+          return;
+        }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+        console.log('Reading file:', file.name); // Debug log
+        const reader = new FileReader();
+        
+        reader.onabort = () => {
+          console.error('File reading was aborted');
+        };
+        
+        reader.onerror = () => {
+          console.error('File reading has failed');
+        };
+        
+        reader.onload = () => {
+          try {
+            const content = reader.result as string;
+            console.log('File content length:', content.length); // Debug log
+            onUpload(content, file.name);
+          } catch (error) {
+            console.error('Error processing file:', error);
+          }
+        };
 
-    if (!file.name.endsWith('.html')) {
-      setError('Please upload an HTML file');
-      return;
-    }
+        reader.readAsText(file);
+      }
+    },
+    [onUpload]
+  );
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target?.result as string;
-      onFileUpload(content);
-      setError(null);
-    };
-    reader.onerror = () => {
-      setError('Failed to read file');
-    };
-    reader.readAsText(file);
-  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'text/html': ['.html', '.htm'],
+    },
+    multiple: false,
+  });
 
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-center w-full">
-        <label
-          htmlFor="email-file"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-        >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              className="w-10 h-10 mb-3 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
-            </svg>
-            <p className="mb-2 text-sm text-gray-500">
-              <span className="font-semibold">Click to upload</span> or drag and drop
+    <Card
+      {...getRootProps()}
+      className={`p-6 border-2 border-dashed cursor-pointer transition-colors
+        ${isDragActive 
+          ? 'border-primary bg-primary/5' 
+          : 'border-border hover:border-primary/50'}`}
+    >
+      <input {...getInputProps()} />
+      <div className="flex flex-col items-center justify-center gap-2 text-center">
+        {isDragActive ? (
+          <>
+            <File className="h-8 w-8 text-primary animate-bounce" />
+            <p className="text-lg font-medium">Drop the HTML file here</p>
+          </>
+        ) : (
+          <>
+            <Upload className="h-8 w-8" />
+            <p className="text-lg font-medium">
+              Drag & drop your HTML file here
             </p>
-            <p className="text-xs text-gray-500">HTML files only</p>
-          </div>
-          <input
-            ref={fileInputRef}
-            id="email-file"
-            type="file"
-            accept=".html"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-        </label>
+            <p className="text-sm text-muted-foreground">
+              or click to select a file
+            </p>
+          </>
+        )}
       </div>
-      {error && (
-        <div className="mt-2 text-red-500 text-sm text-center">
-          {error}
-        </div>
-      )}
-    </div>
+    </Card>
   );
-}; 
+}

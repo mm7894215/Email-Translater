@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { EmailUploader } from './components/EmailUploader';
-import { EmailPreview } from './components/EmailPreview';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { Header } from './components/Header';
+import { TranslateEmail } from './pages/TranslateEmail';
+import { Settings } from './pages/Settings';
+import { ThemeProvider } from './components/ThemeProvider';
+
+if (!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
+  throw new Error('Missing Clerk Publishable Key');
+}
 
 function App() {
-  const [emailContent, setEmailContent] = useState<string>('');
-
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-[1600px] mx-auto">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Email Translator</h1>
-          <p className="text-gray-600">Upload and translate your HTML emails into multiple languages</p>
-        </header>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-3 bg-white rounded-lg shadow">
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold text-gray-800">Upload Email</h2>
-              <p className="text-sm text-gray-500 mt-1">Select an HTML email file to translate</p>
-            </div>
-            <EmailUploader onFileUpload={setEmailContent} />
+    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+      <ThemeProvider defaultTheme="dark" storageKey="email-translator-theme">
+        <Router>
+          <div className="min-h-screen bg-background font-sans antialiased">
+            <Header />
+            <main className="container mx-auto py-6">
+              <Routes>
+                <Route path="/" element={<TranslateEmail />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/sign-in" element={<Settings />} />
+              </Routes>
+            </main>
+            <Toaster position="bottom-right" />
           </div>
-          
-          <div className="lg:col-span-9 bg-white rounded-lg shadow">
-            <EmailPreview htmlContent={emailContent} />
-          </div>
-        </div>
-      </div>
-    </div>
+        </Router>
+      </ThemeProvider>
+    </ClerkProvider>
   );
 }
 
