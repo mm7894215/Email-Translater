@@ -109,10 +109,14 @@ export const languageCodeMap = {
   },
 };
 
-export const translateEmail = async (html: string, targetLang: string): Promise<string> => {
+export const translateEmail = async (
+  content: string,
+  targetLanguage: string,
+  provider: TranslationProvider = 'gpt-4'
+): Promise<string> => {
   try {
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
+    tempDiv.innerHTML = content;
     
     // 提取所有文本节点
     const textNodes: Node[] = [];
@@ -133,8 +137,8 @@ export const translateEmail = async (html: string, targetLang: string): Promise<
     // 翻译所有文本
     for (const node of textNodes) {
       if (node.textContent) {
-        const translated = await googleTranslate(node.textContent, targetLang);
-        node.textContent = translated;
+        const translated = await provider.translate([node.textContent], targetLanguage);
+        node.textContent = translated[0];
       }
     }
     

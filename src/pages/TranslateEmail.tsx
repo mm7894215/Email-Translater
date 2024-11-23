@@ -13,6 +13,11 @@ import { Tabs, TabsList, TabsTrigger } from '../components/ui/segment';
 
 type TranslationProvider = 'gpt-4' | 'gpt-3.5' | 'google';
 
+// 添加错误类型定义
+interface TranslationError extends Error {
+  message: string;
+}
+
 export function TranslateEmail() {
   const { user } = useUser();
   const [htmlContent, setHtmlContent] = useState('');
@@ -49,16 +54,17 @@ export function TranslateEmail() {
       const results = await Promise.all(
         selectedLanguages.map(async (lang) => {
           try {
-            const translated = await translateEmail(htmlContent, lang, provider);
+            const translated = await translateEmail(htmlContent, lang);
             return [lang, translated];
           } catch (error) {
-            toast.error(`Failed to translate to ${lang}: ${error.message}`);
+            const err = error as TranslationError;
+            toast.error(`Failed to translate to ${lang}: ${err.message}`);
             return [lang, ''];
           }
         })
       );
       
-      const successfulTranslations = results.filter(([_, content]) => content);
+      const successfulTranslations = results.filter(([, content]) => content);
       setTranslations(Object.fromEntries(successfulTranslations));
       
       if (successfulTranslations.length > 0) {
@@ -80,7 +86,11 @@ export function TranslateEmail() {
           
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div className=" w-full sm:w-auto flex items-center gap-4">
-            <Tabs value={provider} onValueChange={(value) => setProvider(value as TranslationProvider)} className=" items-center">
+            <Tabs 
+              value={provider} 
+              onValueChange={(value: string) => setProvider(value as TranslationProvider)} 
+              className="items-center"
+            >
                 <TabsList>
                   <TabsTrigger value="gpt-4" className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4" />

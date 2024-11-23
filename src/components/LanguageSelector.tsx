@@ -23,7 +23,15 @@ const languages = [
     { value: "ko", label: "한국어" },
 ] as const
 
-export function LanguageSelector() {
+interface LanguageSelectorProps {
+    selectedLanguages: string[];
+    onChange: (languages: string[]) => void;
+}
+
+export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
+    selectedLanguages,
+    onChange
+}) => {
     const [selectedLanguage, setSelectedLanguage] = useState<string>("en")
 
     const handleLanguageChange = (value: string) => {
