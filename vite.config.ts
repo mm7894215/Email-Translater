@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  optimizeDeps: {
+    include: ['@radix-ui/react-tabs']
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
