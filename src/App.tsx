@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { TranslateEmail } from './pages/TranslateEmail';
 import { Settings } from './pages/Settings';
 import { ThemeProvider } from './components/ThemeProvider';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 if (!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
   throw new Error('Missing Clerk Publishable Key');
@@ -20,7 +21,7 @@ function App() {
             <Header />
             <main className="container mx-auto py-6">
               <Routes>
-                <Route path="/" element={<TranslateEmail />} />
+                <Route path="/" element={<ErrorBoundary><TranslateEmail /></ErrorBoundary>} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/sign-in" element={<Settings />} />
               </Routes>
