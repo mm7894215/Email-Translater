@@ -79,7 +79,7 @@ export function TranslateEmail() {
           <EmailUploader onUpload={handleFileUpload} />
           
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="space-y-4 w-full sm:w-auto flex items-center gap-4">
+            <div className=" w-full sm:w-auto flex items-center gap-4">
             <Tabs value={provider} onValueChange={(value) => setProvider(value as TranslationProvider)} className=" items-center">
                 <TabsList>
                   <TabsTrigger value="gpt-4" className="flex items-center gap-2">
