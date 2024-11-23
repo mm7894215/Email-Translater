@@ -1,13 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+if (!import.meta.env.VITE_SUPABASE_URL) {
+  throw new Error('Missing Supabase URL environment variable');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
+  throw new Error('Missing Supabase Anon Key environment variable');
+}
+
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 export const saveTranslationRecord = async (userId: string, translation: string) => {
   try {
