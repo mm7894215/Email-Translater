@@ -19,16 +19,19 @@ export function Header() {
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link to="/">
-              <Button variant="ghost">Translate</Button>
+
+              Translate
             </Link>
             {user && (
               <Link to="/settings">
-                <Button variant="ghost">Settings</Button>
+
+                Settings
               </Link>
             )}
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
+        <ThemeToggle />
           {user ? (
             <>
               <span className="text-sm text-muted-foreground">{user.emailAddresses[0]?.emailAddress}</span>
@@ -37,7 +40,7 @@ export function Header() {
           ) : (
             <SignInButton />
           )}
-          <ThemeToggle />
+       
         </div>
       </div>
     </header>

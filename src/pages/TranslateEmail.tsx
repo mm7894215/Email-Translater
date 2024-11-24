@@ -10,6 +10,7 @@ import { useUser } from '@clerk/clerk-react';
 import { SignInButton } from '../components/SignInButton';
 import { toast } from 'react-hot-toast';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/segment';
+import { emailPreviewStyles } from '../styles/prose';
 
 type TranslationProvider = 'gpt-4' | 'gpt-3.5' | 'google';
 
@@ -112,7 +113,6 @@ export function TranslateEmail() {
               <Button
                 onClick={handleTranslate}
                 disabled={!htmlContent || selectedLanguages.length === 0 || isTranslating}
-                className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-lg"
                 size="lg"
               >
                 <Languages className="mr-2 h-5 w-5" />
@@ -132,17 +132,7 @@ export function TranslateEmail() {
               <h2 className="text-lg font-semibold">Original Content</h2>
             </div>
             <div
-              className="prose prose-sm dark:prose-invert max-w-none overflow-auto
-                [&>*]:mx-auto [&>*]:w-full 
-                [&>p]:my-2 
-                [&>ul]:list-disc [&>ol]:list-decimal 
-                [&>ul]:pl-4 [&>ol]:pl-4 
-                [&_a]:text-blue-500 [&_a]:underline hover:[&_a]:text-blue-600
-                [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:italic
-                [&_pre]:bg-gray-100 [&_pre]:p-4 [&_pre]:rounded
-                [&_code]:font-mono [&_code]:text-sm
-                [&_table]:border-collapse [&_td]:border [&_td]:p-2 [&_th]:border [&_th]:p-2
-                [&_img]:max-w-full [&_img]:h-auto"
+              className={emailPreviewStyles}
               dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
           </Card>
@@ -161,17 +151,7 @@ export function TranslateEmail() {
               />
             </div>
             <div
-              className="prose prose-sm dark:prose-invert max-w-none overflow-auto
-                [&>*]:mx-auto [&>*]:w-full 
-                [&>p]:my-2 
-                [&>ul]:list-disc [&>ol]:list-decimal 
-                [&>ul]:pl-4 [&>ol]:pl-4 
-                [&_a]:text-blue-500 [&_a]:underline hover:[&_a]:text-blue-600
-                [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:italic
-                [&_pre]:bg-gray-100 [&_pre]:p-4 [&_pre]:rounded
-                [&_code]:font-mono [&_code]:text-sm
-                [&_table]:border-collapse [&_td]:border [&_td]:p-2 [&_th]:border [&_th]:p-2
-                [&_img]:max-w-full [&_img]:h-auto"
+              className={emailPreviewStyles}
               dangerouslySetInnerHTML={{ __html: content }}
             />
           </Card>

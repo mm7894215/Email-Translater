@@ -6,8 +6,8 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "../components/ui/select"
-import { useState } from "react"
+} from "./ui/select"
+import { cn } from "../lib/utils"
 
 // 定义支持的语言列表
 const languages = [
@@ -20,39 +20,50 @@ const languages = [
     { value: "ru", label: "Русский" },
     { value: "zh", label: "中文" },
     { value: "ja", label: "日本語" },
-    { value: "ko", label: "한국어" },
+    { value: "ko", label: "한国어" },
 ] as const
 
 interface LanguageSelectorProps {
     selectedLanguages: string[];
     onChange: (languages: string[]) => void;
+    className?: string;
 }
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     selectedLanguages,
-    onChange
+    onChange,
+    className
 }) => {
-    const [selectedLanguage, setSelectedLanguage] = useState<string>("en")
-
     const handleLanguageChange = (value: string) => {
-        setSelectedLanguage(value)
+        if (selectedLanguages.includes(value)) {
+            onChange(selectedLanguages.filter(lang => lang !== value));
+        } else {
+            onChange([...selectedLanguages, value]);
+        }
     }
 
     return (
-        <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
+        <Select 
+            value={selectedLanguages[selectedLanguages.length - 1] || ''} 
+            onValueChange={handleLanguageChange}
+        >
             <SelectTrigger 
-                className="w-[180px] mx-auto" 
+                className={cn("w-[180px]", className)} 
                 aria-label="Select Language"
             >
                 <SelectValue placeholder="Select language" />
             </SelectTrigger>
-            <SelectContent align="center">
+            <SelectContent>
                 {languages.map((language) => (
                     <SelectItem 
                         key={language.value} 
                         value={language.value}
+                        className="flex items-center justify-between"
                     >
-                        {language.label}
+                        <span>{language.label}</span>
+                        {selectedLanguages.includes(language.value) && (
+                            <span className="ml-2 text-primary">✓</span>
+                        )}
                     </SelectItem>
                 ))}
             </SelectContent>

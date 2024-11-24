@@ -1,5 +1,3 @@
-import { translate } from '@vitalets/google-translate-api';
-
 export interface TranslationResult {
   text: string;
   from: {
@@ -15,6 +13,10 @@ export interface TranslationProvider {
   requiresKey: boolean;
 }
 
+interface TranslationItem extends Array<string> {
+  0: string;
+}
+
 const googleTranslate = async (text: string, targetLang: string): Promise<string> => {
   try {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
@@ -25,7 +27,7 @@ const googleTranslate = async (text: string, targetLang: string): Promise<string
     }
     
     const data = await response.json();
-    return data[0].map((item: any[]) => item[0]).join('');
+    return data[0].map((item: TranslationItem) => item[0]).join('');
   } catch (error) {
     console.error('Google Translate error:', error);
     throw new Error('Failed to translate using Google Translate');
@@ -33,7 +35,7 @@ const googleTranslate = async (text: string, targetLang: string): Promise<string
 };
 
 export const googleTranslateProvider: TranslationProvider = {
-  name: 'Google Translate (Free)',
+  name: 'google',
   requiresKey: false,
   translate: async (texts: string[], targetLang: string) => {
     const results = await Promise.all(
@@ -51,74 +53,15 @@ export const googleTranslateProvider: TranslationProvider = {
   },
 };
 
-export const deeplTranslateProvider: TranslationProvider = {
-  name: 'DeepL',
-  requiresKey: true,
-  translate: async (texts: string[], targetLang: string, apiKey?: string) => {
-    if (!apiKey) {
-      throw new Error('DeepL API key is required');
-    }
-
-    const response = await fetch('https://api-free.deepl.com/v2/translate', {
-      method: 'POST',
-      headers: {
-        'Authorization': `DeepL-Auth-Key ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text: texts,
-        target_lang: targetLang,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`DeepL translation failed: ${response.statusText}\n${errorText}`);
-    }
-
-    const data = await response.json();
-    return data.translations.map((t: { text: string }) => t.text);
-  },
-};
-
-// 语言代码映射
-export const languageCodeMap = {
-  'zh-CN': {
-    google: 'zh-CN',
-    deepl: 'zh',
-  },
-  'ja': {
-    google: 'ja',
-    deepl: 'ja',
-  },
-  'ko': {
-    google: 'ko',
-    deepl: 'ko',
-  },
-  'es': {
-    google: 'es',
-    deepl: 'es',
-  },
-  'fr': {
-    google: 'fr',
-    deepl: 'fr',
-  },
-  'de': {
-    google: 'de',
-    deepl: 'de',
-  },
-};
-
 export const translateEmail = async (
   content: string,
   targetLanguage: string,
-  provider: TranslationProvider = 'gpt-4'
+  provider: TranslationProvider = googleTranslateProvider
 ): Promise<string> => {
   try {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
     
-    // 提取所有文本节点
     const textNodes: Node[] = [];
     const walk = document.createTreeWalker(
       tempDiv,
@@ -134,7 +77,6 @@ export const translateEmail = async (
       }
     }
     
-    // 翻译所有文本
     for (const node of textNodes) {
       if (node.textContent) {
         const translated = await provider.translate([node.textContent], targetLanguage);
