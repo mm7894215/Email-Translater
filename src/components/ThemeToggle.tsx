@@ -1,14 +1,15 @@
 'use client';
 
-import React from 'react';
-import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { useTheme } from './ThemeProvider';
 import { IconSun, IconMoon } from "@tabler/icons-react";
+import { Button } from './ui/button';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -17,16 +18,18 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="sm"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="rounded-md w-8 h-8 flex items-center justify-center transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-      aria-label="Toggle theme"
+      className="w-8 h-8 px-0"
     >
       {theme === 'dark' ? (
-        <IconSun className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+        <IconSun className="h-4 w-4" />
       ) : (
-        <IconMoon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+        <IconMoon className="h-4 w-4" />
       )}
-    </button>
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }

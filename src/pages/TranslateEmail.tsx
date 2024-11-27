@@ -80,7 +80,7 @@ export function TranslateEmail() {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <div className="container mx-auto p-6 space-y-6 mt-24">
       <Card className="p-6">
         <div className="space-y-6">
           <EmailUploader onUpload={handleFileUpload} />

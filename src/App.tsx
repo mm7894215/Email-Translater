@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from './components/ThemeProvider';
 import { Header } from './components/Header';
 import { Home } from './pages/Home';
 import { TranslateEmail } from './pages/TranslateEmail';
@@ -15,10 +15,7 @@ if (!clerkPubKey) {
 
 function App() {
   return (
-    <ThemeProvider 
-      attribute="class" 
-      defaultTheme="system" 
-    >
+    <ThemeProvider defaultTheme="dark" storageKey="app-theme">
       <ClerkProvider publishableKey={clerkPubKey}>
         <Router>
           <div className="min-h-screen bg-background">

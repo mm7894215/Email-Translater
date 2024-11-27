@@ -10,7 +10,7 @@ export function Header() {
   return (
     <div className="fixed inset-x-0 top-6 z-50">
       <header className="relative w-full max-w-[1200px] mx-auto">
-        <div className="absolute inset-0 bg-background/80 shadow-sm rounded-full border border-border/40 backdrop-blur-[12px] backdrop-saturate-[1.8]" />
+        <div className="absolute inset-0 bg-background/30 shadow-sm rounded-full border border-border/40 backdrop-blur-[8px] backdrop-saturate-[1.8]" />
         <nav className="relative px-6">
           <div className="flex h-[52px] items-center justify-between">
             {/* Left section */}

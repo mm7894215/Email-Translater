@@ -62,7 +62,7 @@ export function Settings() {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 mt-24">
       <Card>
         <CardHeader>
           <CardTitle>Settings</CardTitle>
