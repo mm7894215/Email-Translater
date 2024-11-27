@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
 import { Button } from "../../components/ui/button";
-import NextLink from "next/link";
+import { Link } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { IconArrowRight, IconBrandGithub } from "@tabler/icons-react";
 
@@ -198,7 +198,7 @@ export const HeroSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-8 flex flex-col sm:flex-row gap-4"
         >
-          <NextLink href="/upload" passHref>
+          <Link to="/upload">
             <Button className="group relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
               <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950 dark:bg-slate-950 px-8 py-1 text-sm font-medium text-white backdrop-blur-3xl">
@@ -206,7 +206,7 @@ export const HeroSection: React.FC = () => {
                 <IconArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
             </Button>
-          </NextLink>
+          </Link>
           
           <Button
             variant="outline"
