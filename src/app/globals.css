@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.meteor-effect {
+  width: 1px;
+  height: 1px;
+  background: linear-gradient(to right, #64748b, transparent);
+  box-shadow: 0 0 0 1px #64748b10;
+  border-radius: 100%;
+}
+
+.bg-grid-black\/\[0\.2\] {
+  background-size: 30px 30px;
+  background-image: linear-gradient(to right, #00000010 1px, transparent 1px),
+    linear-gradient(to bottom, #00000010 1px, transparent 1px);
+}
+
+.bg-grid-white\/\[0\.2\] {
+  background-size: 30px 30px;
+  background-image: linear-gradient(to right, #ffffff90 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff90 1px, transparent 1px);
+} 

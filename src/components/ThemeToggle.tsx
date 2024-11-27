@@ -1,27 +1,32 @@
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "./ThemeProvider";
-import { Button } from "./ui/button";
+'use client';
+
+import React from 'react';
+import { useTheme } from 'next-themes';
+import { IconSun, IconMoon } from "@tabler/icons-react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
-  const handleToggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={handleToggleTheme}
-      className="w-9 h-9 px-0"
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="rounded-md w-8 h-8 flex items-center justify-center transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
       aria-label="Toggle theme"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && handleToggleTheme()}
     >
-      <Sun className={`h-[1.2rem] w-[1.2rem] ${theme === "light" ? "text-black" : "text-white"} rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0`} />
-      <Moon className={`absolute h-[1.2rem] w-[1.2rem] ${theme === "dark" ? "text-white" : "text-black"} rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100`} />
-      {/* <span className="sr-only">Toggle theme</span> */}
-    </Button>
+      {theme === 'dark' ? (
+        <IconSun className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+      ) : (
+        <IconMoon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+      )}
+    </button>
   );
 }
