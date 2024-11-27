@@ -1,17 +1,22 @@
-import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
-import React from 'react';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { ReactNode } from 'react';
 
-const clerkPubKey = process.env.CLERK_SECRET_KEY || 'sk_test_vsdrcfY9tbSQjzQWChkYt7fxCirkOiFrELIWbCm9Nd';
+interface ClerkIntegrationProps {
+  children: ReactNode;
+}
 
-const ClerkIntegration: React.FC = ({ children }) => {
-    return (
-        <ClerkProvider frontendApi={clerkPubKey}>
-            <SignedIn>{children}</SignedIn>
-            <SignedOut>
-                <RedirectToSignIn />
-            </SignedOut>
-        </ClerkProvider>
-    );
+const ClerkIntegration = ({ children }: ClerkIntegrationProps) => {
+  const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+  if (!clerkPubKey) {
+    throw new Error('Missing Clerk Publishable Key');
+  }
+
+  return (
+    <ClerkProvider publishableKey={clerkPubKey}>
+      {children}
+    </ClerkProvider>
+  );
 };
 
 export default ClerkIntegration;

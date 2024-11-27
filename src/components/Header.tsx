@@ -8,11 +8,11 @@ export function Header() {
   const { user } = useUser();
 
   return (
-    <div className="fixed inset-x-0 top-10 z-50">
-      <header className="relative w-full max-w-[1100px] mx-auto border border-border/40  backdrop-blur-sm backdrop-saturate-200  border-gray-200 dark:border-gray-900 rounded-full">
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/0 rounded-full" />
-        <nav className="mx-auto max-w-screen-xl px-6 lg:px-6">
-          <div className="relative flex h-[54px] items-center justify-between">
+    <div className="fixed inset-x-0 top-6 z-50">
+      <header className="relative w-full max-w-[1200px] mx-auto">
+        <div className="absolute inset-0 bg-background/80 shadow-sm rounded-full border border-border/40 backdrop-blur-[12px] backdrop-saturate-[1.8]" />
+        <nav className="relative px-6">
+          <div className="flex h-[52px] items-center justify-between">
             {/* Left section */}
             <div className="flex items-center gap-6">
               <Link 
@@ -65,7 +65,6 @@ export function Header() {
             </div>
           </div>
         </nav>
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
       </header>
     </div>
   );

@@ -20,25 +20,27 @@ const languages = [
     { value: "ru", label: "Русский" },
     { value: "zh", label: "中文" },
     { value: "ja", label: "日本語" },
-    { value: "ko", label: "한国어" },
+    { value: "ko", label: "한국어" },
 ] as const
 
 interface LanguageSelectorProps {
     selectedLanguages: string[];
-    onChange: (languages: string[]) => void;
+    onLanguagesChange: (languages: string[]) => void;
+    disabled?: boolean;
     className?: string;
 }
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     selectedLanguages,
-    onChange,
+    onLanguagesChange,
+    disabled,
     className
 }) => {
     const handleLanguageChange = (value: string) => {
         if (selectedLanguages.includes(value)) {
-            onChange(selectedLanguages.filter(lang => lang !== value));
+            onLanguagesChange(selectedLanguages.filter(lang => lang !== value));
         } else {
-            onChange([...selectedLanguages, value]);
+            onLanguagesChange([...selectedLanguages, value]);
         }
     }
 
@@ -46,6 +48,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         <Select 
             value={selectedLanguages[selectedLanguages.length - 1] || ''} 
             onValueChange={handleLanguageChange}
+            disabled={disabled}
         >
             <SelectTrigger 
                 className={cn("w-[180px]", className)} 

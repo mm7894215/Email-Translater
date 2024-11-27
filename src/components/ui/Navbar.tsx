@@ -14,7 +14,7 @@ export const Navbar = () => {
         <div className="flex gap-4">
           <NextLink href="/">
             <Button
-              variant="light"
+              variant="ghost"
               className="text-sm font-medium"
             >
               Home
@@ -22,7 +22,7 @@ export const Navbar = () => {
           </NextLink>
           <NextLink href="/upload">
             <Button
-              variant="light"
+              variant="ghost"
               className="text-sm font-medium"
             >
               Upload

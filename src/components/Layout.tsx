@@ -1,16 +1,17 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from './Header';
+import { ReactNode } from 'react';
+import { Header } from './Header';
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <Outlet />
+        {children}
       </main>
     </div>
   );
-};
-
-export default Layout;
+}

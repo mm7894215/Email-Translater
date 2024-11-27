@@ -103,7 +103,8 @@ export function TranslateEmail() {
               </Tabs>
               <LanguageSelector
                 selectedLanguages={selectedLanguages}
-                onChange={setSelectedLanguages}
+                onLanguagesChange={setSelectedLanguages}
+                disabled={isTranslating}
               />
               
               

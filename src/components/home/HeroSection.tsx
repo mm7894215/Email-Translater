@@ -108,7 +108,7 @@ export const TextGenerateEffect = ({
 
 export const HeroSection: React.FC = () => {
   useEffect(() => {
-    const gridElement = document.querySelector('[data-dark-mode]');
+    const gridElement = document.querySelector('[data-dark-mode]') as HTMLElement;
     const updateGridBackground = () => {
       if (gridElement) {
         const isDark = document.documentElement.classList.contains('dark');
