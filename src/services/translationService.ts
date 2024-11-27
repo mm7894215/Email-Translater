@@ -1,4 +1,4 @@
-import { translate } from '@google-cloud/translate';
+import { Translate } from '@google-cloud/translate/build/src/v2';
 
 interface TranslationResult {
   translatedHtml: string;
