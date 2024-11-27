@@ -6,8 +6,8 @@ import { LogIn } from 'lucide-react';
 export function SignInButton() {
   return (
     <ClerkSignInButton mode="modal">
-      <Button className="w-full sm:w-auto">
-        <LogIn className="mr-2 h-4 w-4" />
+      <Button className="text-sm h-8 rounded-full  border border-border/40 hover:muted/60 transition-colors" >
+        <LogIn className="mr-2 h-4 w-4 " />
         Sign In
       </Button>
     </ClerkSignInButton>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { ThemeToggle } from "./ThemeToggle";
 import { SignInButton } from './SignInButton';
+import { Snail } from 'lucide-react';
 
 export function Header() {
   const { user } = useUser();
@@ -17,21 +18,21 @@ export function Header() {
             <div className="flex items-center gap-6">
               <Link 
                 to="/" 
-                className="flex items-center gap-2 text-lg font-medium tracking-tight hover:opacity-80 transition-all"
+                className="flex items-center gap-3 text-md font-bold tracking-tight hover:opacity-80 transition-all font-mono"
               >
-                Email Analyzer Pro
+                <Snail strokeWidth={1.75} className="w-6 h-6" /> Email Analyzer Pro
               </Link>
-              <div className="hidden md:flex items-center gap-1">
+              <div className="hidden md:flex items-center gap-1" >
                 <Link 
                   to="/translate" 
-                  className="rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                  className="rounded-md px-3 py-2 text-[14px] text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                 >
                   Translate
                 </Link>
                 {user && (
                   <Link 
                     to="/settings" 
-                    className="rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                    className="rounded-md px-3 py-2 text-[14px] text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
                   >
                     Settings
                   </Link>
