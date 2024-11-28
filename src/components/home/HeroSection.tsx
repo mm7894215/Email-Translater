@@ -217,7 +217,7 @@ export const HeroSection: React.FC = () => {
             onClick={handleClick}
           >
             <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-            <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950 dark:bg-slate-950 px-8 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-white dark:bg-black px-8 py-1 text-sm font-medium text-black dark:text-white backdrop-blur-3xl">
               <SignedIn>Get Started</SignedIn>
               <SignedOut>Sign In</SignedOut>
               <IconArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
