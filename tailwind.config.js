@@ -5,6 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      spacing: {
+        xs: '4px',  
+        sm: '8px',
+        md: '16px',
+        lg: '24px',
+        xl: '48px',
+      },
       animation: {
         sparkle: 'sparkle 1s linear infinite',
       },
@@ -43,14 +50,6 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
         },
       },
     },

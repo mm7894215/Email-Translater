@@ -3,9 +3,10 @@
 import React, { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
 import { Button } from "../../components/ui/button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { IconArrowRight, IconBrandGithub } from "@tabler/icons-react";
+import { SignedIn, SignedOut, useUser, useClerk } from '@clerk/clerk-react';
 
 // Sparkles effect component
 const Sparkles = () => {
@@ -107,6 +108,19 @@ export const TextGenerateEffect = ({
 };
 
 export const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+  const { openSignIn } = useClerk();
+  const { isSignedIn } = useUser();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isSignedIn) {
+      navigate('/translate');
+    } else {
+      openSignIn();
+    }
+  };
+
   useEffect(() => {
     const gridElement = document.querySelector('[data-dark-mode]') as HTMLElement;
     const updateGridBackground = () => {
@@ -144,22 +158,22 @@ export const HeroSection: React.FC = () => {
 
   return (
     <div className="relative h-[100vh] w-full flex items-center justify-center bg-white dark:bg-black overflow-hidden">
-       <Sparkles />
-       <div 
-         className="absolute inset-0" 
-         style={{
-           backgroundImage: `
-             linear-gradient(to right, rgba(31, 31, 31, 0.2) 1px, transparent 1px),
-             linear-gradient(to bottom, rgba(31, 31, 31, 0.2) 1px, transparent 1px)
-           `,
-           backgroundSize: '50px 50px'
-         }}
-         data-dark-mode={`
-           linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-           linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px)
-         `}
-       />
-       <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-black" />
+      <Sparkles />
+      <div 
+        className="absolute inset-0" 
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(31, 31, 31, 0.2) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(31, 31, 31, 0.2) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }}
+        data-dark-mode={`
+          linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px)
+        `}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-black" />
       
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center text-center px-4">
@@ -198,19 +212,22 @@ export const HeroSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-8 flex flex-col sm:flex-row gap-4"
         >
-          <Link to="/upload">
-            <Button className="group relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950 dark:bg-slate-950 px-8 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                Get Started
-                <IconArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
-            </Button>
-          </Link>
-          
+          <Button 
+            className="group relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+            onClick={handleClick}
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950 dark:bg-slate-950 px-8 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              <SignedIn>Get Started</SignedIn>
+              <SignedOut>Sign In</SignedOut>
+              <IconArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Button>
+
           <Button
             variant="outline"
             className="h-12 rounded-full border-neutral-300 dark:border-neutral-700"
+            onClick={() => window.open('https://github.com/mm7894215/Email-Translater', '_blank')}
           >
             <IconBrandGithub className="mr-2 h-4 w-4" />
             Star on GitHub
