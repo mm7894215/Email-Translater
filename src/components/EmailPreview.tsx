@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { translateHtml } from '../services/translationService';
+import { TranslationService } from '../services/translationService';
 import { LanguageSelector } from './LanguageSelector';
 import { toast } from 'react-hot-toast';
 
@@ -30,6 +30,8 @@ export const EmailPreview: React.FC<EmailPreviewProps> = ({
   });
 
   const [isTranslating, setIsTranslating] = useState(false);
+
+  const translationService = new TranslationService();
 
   useEffect(() => {
     setTranslations(prev => ({
@@ -66,7 +68,7 @@ export const EmailPreview: React.FC<EmailPreviewProps> = ({
       setTranslations({ ...newTranslations });
 
       try {
-        const { translatedHtml, error } = await translateHtml(htmlContent, language);
+        const { translatedHtml, error } = await translationService.translateHtml(htmlContent, language);
         if (error) {
           throw new Error(error);
         }
